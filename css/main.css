@@ -1,0 +1,195 @@
+*, :after, :before {
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+@font-face {
+	font-family: 'DS';
+    src: url('../fonts/lets_go_digital_regular-webfont.eot');
+    src: url('../fonts/lets_go_digital_regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/lets_go_digital_regular-webfont.woff2') format('woff2'),
+         url('../fonts/lets_go_digital_regular-webfont.woff') format('woff'),
+         url('../fonts/lets_go_digital_regular-webfont.ttf') format('truetype'),
+         url('../fonts/lets_go_digital_regular-webfont.svg#ds-digitalnormal') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+	background: #D8D8D8;
+}
+
+.clock-body {
+	display: block;
+	position: absolute;
+	background: #2F2F2F;
+	padding: 5px;
+	padding-left: 50px;
+	padding-right: 50px;
+	left: 50%;
+	top: 50%;
+	margin-top: -75px;
+	margin-left: -200px;
+	box-shadow: inset 0 0px 50px 0 #000000;
+}
+
+.clock-body:after {
+	content: '';
+	position: absolute;
+	top: 140px;
+	left: 25px;
+	width: 350px;
+	height: 20px;
+	background: #2D2D2D;
+	border-bottom: 3px solid #000000;
+	box-shadow: inset 0 0px 5px 0 #000000;
+}
+
+.clock-face {
+	position: relative;
+	background: #FFFFFF;
+	width: 300px;
+	height: 130px;
+	padding: 0 10px;
+	text-align: center;
+	line-height: 150px;
+	border: 3px solid #333333;
+	font-family: 'DS';
+	font-size: 120px;
+	text-shadow: 0 0 10px red;
+	color: red;
+	background: #1A1313;
+	display: inline-block;
+	border-radius: 5px;
+	box-shadow: inset 0 0 10px 2px black;
+}
+
+.clock-face:after {
+	content: '';
+	opacity: 0.5;
+	display: block;
+	position: absolute;
+	top: 0;
+  	left: 0;
+	background: transparent; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  transparent 0%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,transparent), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  transparent 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  transparent 0%,#000000 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  transparent 0%,#000000 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  transparent 0%,#000000 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='transparent', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+}
+
+.clock-face .hours, .clock-face .minutes, .clock-face .separator {
+	display: inline-block;
+	position: relative;
+}
+
+.clock-face .hours:before, .clock-face .minutes:before {
+	content: '00';
+	position: absolute;
+	color: #E7E7E7;
+	opacity: 0.1;
+}
+
+.time-one, .time-two {
+	display: inline-block;
+	width: 61px;
+	text-align: left;
+}
+
+.time-one[one], .time-two[one] {
+	transform: rotate(180deg);
+  	transform-origin: 55% 50%;
+}
+
+.more, .less {
+	font-size: 24px;
+	background: #171212;
+	border-radius: 50%;
+	line-height: 32px;
+	width: 36px;
+	text-align: center;
+	z-index: 999;
+}
+
+.more {
+	position: absolute;
+	left: 45px;
+	top: 5px;
+	z-index: 999;
+	opacity: 0;
+}
+
+.less {
+	position: absolute;
+	left: 45px;
+	top: 110px;
+	z-index: 999;
+	opacity: 0;
+}
+
+.clock-face:hover .more, .clock-face:hover .less{
+	opacity: 1;
+}
+
+.more:focus, .more:active, .more:hover {
+	cursor: pointer;
+	top: 3px;
+}
+
+.less:focus, .less:active, .less:hover {
+	cursor: pointer;
+	top: 113px;
+	box-shadow: 0 0 3px black;
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.separator {
+	animation: blink 1s ease infinite;
+}
+
+.currentTime, .alarmStatus {
+	position: absolute;
+	top: 2px;
+	font-size: 24px;
+	line-height: 30px;
+}
+
+.currentTime {
+	right: 100px;
+}
+
+.alarmStatus {
+	left: 10px;
+}
+
+.clock-body .play {
+	cursor: pointer;
+	position: absolute;
+	color: #fff;
+	text-shadow: 0 0 10px #391818;
+	left: 15px;
+	top: 57.5px;
+	font-size: 24px;
+}
+
+.clock-body .play:hover {
+	top: 55px;
+}
