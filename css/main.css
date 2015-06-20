@@ -20,7 +20,15 @@
 }
 
 body {
-	background: #D8D8D8;
+	min-height: 100vh;
+	background: #fefcea; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #fefcea 0%,#f1da36 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .clock-body {
@@ -183,7 +191,7 @@ body {
 .clock-body .play {
 	cursor: pointer;
 	position: absolute;
-	color: #fff;
+	color: #D54113;
 	text-shadow: 0 0 10px #391818;
 	left: 15px;
 	top: 57.5px;
