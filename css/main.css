@@ -7,6 +7,11 @@
 	-webkit-user-select: none;
 }
 
+.fb-like { 
+	margin: 10px;
+	float: right;
+}
+
 @font-face {
 	font-family: 'DS';
     src: url('../fonts/lets_go_digital_regular-webfont.eot');
