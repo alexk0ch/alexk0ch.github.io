@@ -8,13 +8,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	var alarmStatus = document.querySelector('.alarmStatus');
 	var play = document.querySelector('.play');
   var clockBody = document.querySelector('.clock-body');
+  var mousewheel = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
+
+  var PLAY = "&#9658;";
+  var PAUSE = "&#9726;";
 
 	play.addEventListener('click', function () {
 		if (alarmSound.paused) {
 			alarmSound.play();
-			this.innerHTML = "&#9726;";
+			this.innerHTML = PAUSE;
 		} else {
-			this.innerHTML = "&#9658;";
+			this.innerHTML = PLAY;
 			alarmSound.pause();
 			alarmSound.currentTime = 0;
 		}
@@ -28,20 +32,16 @@ document.addEventListener('DOMContentLoaded', function () {
     clockBody.classList.remove('ringing');
   });
 
-  var mousewheel = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
-
   window.addEventListener(mousewheel, function (e) {
-    if (e.target.className === "clock-face") {
+    if (e.target.className !== "clock-face") return;
+    var d = e.deltaY;
 
-      var d = e.deltaY;
+    if (e.offsetX < 135) {
+      d < 0 ? hours._increase(hours.max) : hours._decrease(hours.max);
+    }
 
-      if (e.offsetX < 135) {
-        d < 0 ? hours._increase(hours.max) : hours._decrease(hours.max);
-      }
-
-      if (e.offsetX > 175) {
-        d < 0 ? minutes._increase(minutes.max) : minutes._decrease(minutes.max);
-      }
+    if (e.offsetX > 175) {
+      d < 0 ? minutes._increase(minutes.max) : minutes._decrease(minutes.max);
     }
   });
 
@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		this.currentLeft = 0;
 		this.currentRight = 0;
 		this.max = max;
-
 		this.bindEvents(parentSelector);
 	};
 
@@ -79,29 +78,29 @@ document.addEventListener('DOMContentLoaded', function () {
 		this.digitRight.textContent =  rightDigit;
 	};
 
-	TimeTracker.prototype._increase = function (max) {
+	TimeTracker.prototype._increase = function () {
 		var current = this.get();
-		(current + 1 <= max) ? this.set(++current) : this.set(0);
+		(current + 1 <= this.max) ? this.set(++current) : this.set(0);
 	};
 
-	TimeTracker.prototype._decrease = function (max) {
+	TimeTracker.prototype._decrease = function () {
 		var current = this.get();
-		(current - 1 >= 0) ? this.set(--current) : this.set(max);
+		(current - 1 >= 0) ? this.set(--current) : this.set(this.max);
 	};
 
 	TimeTracker.prototype.bindEvents = function (parentSelector) {
 		var m = document.querySelector(parentSelector + ' .more');
 		var l = document.querySelector(parentSelector + ' .less');
 
-		m.addEventListener('click', this._increase.bind(this, this.max));		
-		l.addEventListener('click', this._decrease.bind(this, this.max));
+		m.addEventListener('click', this._increase.bind(this));		
+		l.addEventListener('click', this._decrease.bind(this));
 
 		var mousedown = null;
 		var interval = 200;
 		var _this = this;
 
 		m.addEventListener('mousedown', function () {
-			mousedown = setInterval(_this._increase.bind(_this, _this.max), interval);
+			mousedown = setInterval(_this._increase.bind(_this), interval);
 		});
 
 		m.addEventListener('mouseup', function () {
@@ -109,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 
 		l.addEventListener('mousedown', function () {
-			mousedown = setInterval(_this._decrease.bind(_this, _this.max), interval);
+			mousedown = setInterval(_this._decrease.bind(_this), interval);
 		});
 
 		l.addEventListener('mouseup', function () {
@@ -119,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	var hours = new TimeTracker ('.hours', 23);
 	var minutes = new TimeTracker ('.minutes', 59);
-
 	var currentTime = new CurrentTime ('.currentTime');
 
 	function CurrentTime (selector) {
@@ -152,9 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	};
 
 	function checkAlarm (h, m) {
-		if (h == alarmTime.hours && m == alarmTime.minutes) {
-			if (alarmSound.paused)
-				alarmSound.play();
-		}
+		if (h != alarmTime.hours && m != alarmTime.minutes) return;
+    if (alarmSound.paused) alarmSound.play();
 	};
+
 });
