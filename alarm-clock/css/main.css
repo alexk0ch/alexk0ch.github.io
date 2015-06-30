@@ -7,6 +7,18 @@
 	-webkit-user-select: none;
 }
 
+@-webkit-keyframes thumb {
+  0% { -webkit-transform: scale(1); }
+  50% { -webkit-transform: scale(0.9); }
+  100% { -webkit-transform: scale(1); }
+}
+
+@-keyframes thumb {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
 .fb-like { 
 	margin: 10px;
 	float: right;
@@ -26,14 +38,8 @@
 
 body {
 	min-height: 100vh;
-	background: #fefcea; /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  #fefcea 0%, #f1da36 100%); /* FF3.6+ */
-	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
-	background: -webkit-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* Opera 12+ */
-	background: -ms-radial-gradient(center, ellipse cover,  #fefcea 0%,#f1da36 100%); /* IE10+ */
-	background: radial-gradient(ellipse at center,  #fefcea 0%,#f1da36 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: url(../images/panda.jpg);
+  background-size: cover;
 }
 
 .clock-body {
@@ -48,6 +54,32 @@ body {
 	margin-top: -75px;
 	margin-left: -200px;
 	box-shadow: inset 0 0px 50px 0 #000000;
+}
+
+.clock-body.ringing {
+  -webkit-animation-name: thumb;
+  -webkit-animation-duration: 200ms;
+  -webkit-transform-origin:50% 50%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  animation-name: thumb;
+  animation-duration: 200ms;
+  transform-origin:50% 50%;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.clock-body:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.69);
+  width: 150%;
+  height: 250%;
+  left: -25%;
+  top: -75%;
+  border-radius: 50%;  
+  box-shadow: 0 0 30px 15px rgba(232, 98, 35, 0.69);
 }
 
 .clock-body:after {

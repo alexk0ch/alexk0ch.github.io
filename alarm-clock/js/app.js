@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	var alarmSound = document.querySelector('audio');
 	var alarmStatus = document.querySelector('.alarmStatus');
 	var play = document.querySelector('.play');
+  var clockBody = document.querySelector('.clock-body');
 
 	play.addEventListener('click', function () {
 		if (alarmSound.paused) {
@@ -18,6 +19,31 @@ document.addEventListener('DOMContentLoaded', function () {
 			alarmSound.currentTime = 0;
 		}
 	});
+
+  alarmSound.addEventListener('play', function () {
+    clockBody.classList.add('ringing');
+  });
+
+  alarmSound.addEventListener('pause', function () {
+    clockBody.classList.remove('ringing');
+  });
+
+  var mousewheel = (/Firefox/i.test(navigator.userAgent)) ? 'DOMMouseScroll' : 'mousewheel';
+
+  window.addEventListener(mousewheel, function (e) {
+    if (e.target.className === "clock-face") {
+
+      var d = e.deltaY;
+
+      if (e.offsetX < 135) {
+        d < 0 ? hours._increase(hours.max) : hours._decrease(hours.max);
+      }
+
+      if (e.offsetX > 175) {
+        d < 0 ? minutes._increase(minutes.max) : minutes._decrease(minutes.max);
+      }
+    }
+  });
 
 	function TimeTracker (parentSelector, max) {
 		this.digitLeft = document.querySelector(parentSelector + ' .time-one');
